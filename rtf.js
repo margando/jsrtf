@@ -105,7 +105,7 @@ class RTF {
             var rtf = this;
             ['left', 'center', 'right'].forEach(function( mode ){
                 if (typeof rtf.footer[ mode ] != 'undefined'){
-                    f += (rtf.footer[ mode ] == rtf.numberPage ? "\\chpgn" : rtf.footer[mode]);
+                    f += (rtf.footer[ mode ] == rtf.numberPage ? "\\chpgn" : this.specialChars(rtf.footer[mode]));
                 }
                 if (mode != 'right'){
                     f += rtf.control.tab;
@@ -122,7 +122,7 @@ class RTF {
             //+ "{\\header\\pard\\sb300\\fi-993 " + logo + "\\line\\par}" //espacio en cabecera before sb, after sa
             + "{\\*\\ftnsep\\chftnsep}"
             + "\\pgndec\\pard\\plain \\s0\\widctlpar\\hyphpar0\\cf0\\kerning1\\dbch\\af5\\langfe2052\\dbch\\af6\\afs24\\alang1081\\loch\\f3\\hich\\af3\\fs24\\lang3082"
-            + this.content
+            + this.specialChars(this.content)
             + "}"
         ;
         this.download( rtf, 'fichero' + '.rtf', 'rtf');
@@ -147,6 +147,63 @@ class RTF {
             }, 0); 
         }
     }
+    
+    /**
+     * 
+     */
+    specialChars( t ){
+        return t
+            .replace(/ª/g, "\\u170\\'aa")
+            .replace(/º/g, "\\u186\\'ba")
+            .replace(/¿/g, "\\u191\\'be")
+            .replace(/À/g, "\\u192\\'c0")
+            .replace(/Á/g, "\\u193\\'c1")
+            .replace(/Â/g, "\\u194\\'c2")
+            .replace(/Ä/g, "\\u196\\'c4")
+            .replace(/Ç/g, "\\u199\\'c7")
+            .replace(/È/g, "\\u200\\'c8")
+            .replace(/É/g, "\\u201\\'c9")
+            .replace(/Ê/g, "\\u202\\'ca")
+            .replace(/Ë/g, "\\u203\\'cb")
+            .replace(/Ì/g, "\\u204\\'cc")
+            .replace(/Í/g, "\\u205\\'cd")
+            .replace(/Î/g, "\\u206\\'ce")
+            .replace(/Ï/g, "\\u206\\'cf")
+            .replace(/Ñ/g, "\\u209\\'d1")
+            .replace(/Ò/g, "\\u210\\'d2")
+            .replace(/Ó/g, "\\u211\\'d3")
+            .replace(/Ô/g, "\\u212\\'d4")
+            .replace(/Ö/g, "\\u214\\'d6")
+            .replace(/Ù/g, "\\u217\\'d9")
+            .replace(/Ú/g, "\\u218\\'da")
+            .replace(/Û/g, "\\u219\\'db")
+            .replace(/Ü/g, "\\u220\\'dc")
+            .replace(/à/g, "\\u224\\'e0")
+            .replace(/á/g, "\\u225\\'e1")
+            .replace(/â/g, "\\u226\\'e2")
+            .replace(/ä/g, "\\u228\\'e4")
+            .replace(/ç/g, "\\u231\\'e7")
+            .replace(/è/g, "\\u232\\'e8")
+            .replace(/é/g, "\\u233\\'e9")
+            .replace(/ê/g, "\\u234\\'ea")
+            .replace(/ë/g, "\\u235\\'eb")
+            .replace(/ì/g, "\\u236\\'ec")
+            .replace(/í/g, "\\u237\\'ed")
+            .replace(/î/g, "\\u238\\'ee")
+            .replace(/ï/g, "\\u239\\'ef")
+            .replace(/ñ/g, "\\u241\\'f1")
+            .replace(/ò/g, "\\u242\\'f2")
+            .replace(/ó/g, "\\u243\\'f3")
+            .replace(/ô/g, "\\u244\\'f4")
+            .replace(/ö/g, "\\u246\\'f6")
+            .replace(/ù/g, "\\u249\\'f9")
+            .replace(/ú/g, "\\u250\\'fa")
+            .replace(/û/g, "\\u251\\'fb")
+            .replace(/ü/g, "\\u252\\'fc")
+            .replace(/–/g, "\\u8211\\'96")
+        ;
+}
+
 }
 
 /**
