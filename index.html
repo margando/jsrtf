@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="RTF desde js">
+        <meta name="author" content="https://github.com/margando/jsrtf">
+        <meta name="generator" content="">
+        <title>RTF desde js</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <script src="rtf.js"></script>
+        
+    </head>
+    <body>
+        <div class="content text-center mt-5">
+            <h1 class="mb-3">Generate RTF with pure js</h1>
+            <button type="button" class="btn btn-primary" id="demo1">Demo 1: hello word</button>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function(){
+            $('#demo1').click(function(){
+                var rtf  = new RTF();
+                rtf.addFont( 0, 'Times New Roman' );
+                rtf.addFont( 1, 'Arial' );
+                rtf.addFont( 2, 'Courier New' );
+                rtf.addFooter( {left: 'js rtf', center: 'Demo', right: rtf.numberPage } );
+                
+                var text1 = new RTFText( 'Hello World' );
+                text1.bold();
+                text1.font( 0 );
+                text1.fontSize( 20 );
+                text1.addLine( 2 );
+                
+                var text2 = new RTFText( 'Hello World: Arial' );
+                text2.italic();
+                text2.font( 1 );
+                text2.fontSize( 30 );
+                text2.addLine( 2 );
+                text2.color( 'red' );
+                
+                var text3 = new RTFText( 'Hello World: Courier New' );
+                text3.font( 2 );
+                text3.fontSize( 50 );
+                text3.color( 'white' );
+                text3.bgColor( 'black' );
+
+                rtf.addParagraph( text1 );
+                rtf.addParagraph([ text2, text3 ]);
+                
+                var text = new RTFText( 'underline + center' );
+                text.underline();
+                text.font( 0 );
+                text.fontSize( 20 );
+                text.center();
+                text.spaceBefore( 600 );
+                rtf.addParagraph( text );
+                
+                var text = new RTFText( 'strike + right' );
+                text.strike();
+                text.font( 0 );
+                text.fontSize( 20 );
+                text.right();
+                text.spaceBefore( 300 );
+                rtf.addParagraph( text );
+                
+                
+                rtf.generate();
+            });
+        })
+    </script>
+</html>
